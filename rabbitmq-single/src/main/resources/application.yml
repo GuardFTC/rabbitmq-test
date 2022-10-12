@@ -1,3 +1,7 @@
+#server配置
+server:
+  port: 8081
+
 #spring配置
 spring:
 
@@ -11,7 +15,3 @@ spring:
     listener:
       simple:
         acknowledge-mode: AUTO
-
-#server配置
-server:
-  port: 8081

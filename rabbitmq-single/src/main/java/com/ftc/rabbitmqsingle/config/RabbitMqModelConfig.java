@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @describe: RabbitMq组件配置
  */
 @Configuration
-public class RabbitMqConfig {
+public class RabbitMqModelConfig {
 
     @Bean
     public DirectExchange defaultExchange() {
