@@ -1,39 +1,46 @@
-//package com.ftc.workmode.config;
-//
-//import org.springframework.amqp.core.Queue;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-///**
-// * @author: 冯铁城 [17615007230@163.com]
-// * @date: 2022-10-12 10:47:47
-// * @describe: 简单模式组件配置
-// */
-//@Configuration
-//public class TopicModeConfig {
-//
-//    /**
-//     * 默认交换机
-//     */
-//    private static final String DEFAULT = "AMQP default";
-//
-//    /**
-//     * 直连交换机
-//     */
-//    private static final String DIRECT = "amq.direct";
-//
-//    /**
-//     * 扇形交换机
-//     */
-//    private static final String FANOUT = "amq.fanout";
-//
-//    /**
-//     * 主题交换机
-//     */
-//    private static final String TOPIC = "amq.topic";
-//
-//    @Bean
-//    public Queue simpleModeQueue() {
-//        return new Queue("simple-mode-queue", false);
-//    }
-//}
+package com.ftc.workmode.config;
+
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author: 冯铁城 [17615007230@163.com]
+ * @date: 2022-10-12 10:47:47
+ * @describe: 主题模式组件配置
+ */
+@Configuration
+public class TopicModeConfig {
+
+    @Bean
+    public TopicExchange topicModeExchange() {
+        return new TopicExchange("topic-mode-exchange", false, false);
+    }
+
+    @Bean
+    public Queue topicModeQueue1() {
+        return new Queue("topic-mode-queue1", false);
+    }
+
+    @Bean
+    public Queue topicModeQueue2() {
+        return new Queue("topic-mode-queue2", false);
+    }
+
+    @Bean
+    public Binding topicBinding1() {
+        return BindingBuilder.bind(topicModeQueue1())
+                .to(topicModeExchange())
+                .with("topic1.*");
+    }
+
+    @Bean
+    public Binding topicBinding2() {
+        return BindingBuilder.bind(topicModeQueue2())
+                .to(topicModeExchange())
+                .with("topic2.#");
+    }
+}

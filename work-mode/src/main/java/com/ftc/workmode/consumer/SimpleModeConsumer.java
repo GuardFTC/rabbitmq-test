@@ -1,5 +1,6 @@
 package com.ftc.workmode.consumer;
 
+import cn.hutool.log.StaticLog;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -14,8 +15,8 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class SimpleModeConsumer {
 
-    @RabbitListener(queues = "default-queue")
-    public void getMessage(Message message) {
-        System.out.println(new String(message.getBody(), StandardCharsets.UTF_8));
+    @RabbitListener(queues = {"simple-mode-queue"})
+    public void consumer(Message message) {
+        StaticLog.info("SimpleModeConsumer receive message:[{}]", new String(message.getBody(), StandardCharsets.UTF_8));
     }
 }

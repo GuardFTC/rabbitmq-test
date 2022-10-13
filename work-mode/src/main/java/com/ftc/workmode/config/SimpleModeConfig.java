@@ -1,8 +1,5 @@
 package com.ftc.workmode.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,21 +11,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SimpleModeConfig {
-//
-//    @Bean
-//    public DirectExchange defaultExchange() {
-//        return new DirectExchange("default-exchange", false, false);
-//    }
 
     @Bean
-    public Queue defaultQueue() {
-        return new Queue("default-queue", false);
+    public Queue simpleModeQueue() {
+        return new Queue("simple-mode-queue", false);
     }
-
-//    @Bean
-//    public Binding defaultBind() {
-//        return BindingBuilder.bind(defaultQueue())
-//                .to(defaultExchange())
-//                .with("default-queue");
-//    }
 }
