@@ -34,13 +34,13 @@ public class TopicModeConfig {
     public Binding topicBinding1() {
         return BindingBuilder.bind(topicModeQueue1())
                 .to(topicModeExchange())
-                .with("topic1.*");
+                .with("topic.*");
     }
 
     @Bean
     public Binding topicBinding2() {
         return BindingBuilder.bind(topicModeQueue2())
                 .to(topicModeExchange())
-                .with("topic2.#");
+                .with("topic.#");
     }
 }

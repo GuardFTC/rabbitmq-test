@@ -46,10 +46,11 @@ class WorkModeApplicationTests {
 
     @Test
     void TopicModePublisher1() {
-        rabbitTemplate.convertAndSend("topic-mode-exchange", "topic1.one", "主题模式第一条消息");
-        rabbitTemplate.convertAndSend("topic-mode-exchange", "topic1.two", "主题模式第二条消息");
-        rabbitTemplate.convertAndSend("topic-mode-exchange", "topic2.two.one", "主题模式第三条消息");
-        rabbitTemplate.convertAndSend("topic-mode-exchange", "topic2.two.two", "主题模式第四条消息");
-        rabbitTemplate.convertAndSend("topic-mode-exchange", "topic2.two.three", "主题模式第五条消息");
+        rabbitTemplate.convertAndSend("topic-mode-exchange", "topic.one", "主题模式第一条消息");
+    }
+
+    @Test
+    void TopicModePublisher2() {
+        rabbitTemplate.convertAndSend("topic-mode-exchange", "topic.one.two", "主题模式第二条消息");
     }
 }
