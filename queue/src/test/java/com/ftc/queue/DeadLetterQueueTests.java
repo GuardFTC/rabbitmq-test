@@ -35,6 +35,7 @@ class DeadLetterQueueTests {
     }
 
     @Test
+    @SneakyThrows
     void testDeadLetterQueueUnAckOrReject() {
 
         //1.发送消费异常消息
@@ -50,5 +51,8 @@ class DeadLetterQueueTests {
         message = new Message("被拒绝消息".getBytes(StandardCharsets.UTF_8), messageProperties);
         rabbitTemplate.send("normal-exchange", "unack-or-reject-queue", message);
         StaticLog.info("被拒绝消息发送成功");
+
+        //3.线程睡一会
+        TimeUnit.SECONDS.sleep(10);
     }
 }
