@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
-class QueueApplicationTests {
+class DeadLetterQueueTests {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;

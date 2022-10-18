@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
  * @describe: 死信队列相关消费者
  */
 @Component
-public class DeadLetterConsumer {
+public class DeadLetterQueueConsumer {
 
     /**
      * 消费异常index
