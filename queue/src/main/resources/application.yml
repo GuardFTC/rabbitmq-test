@@ -16,11 +16,5 @@ spring:
     publisher-returns: true
     listener:
       simple:
-        acknowledge-mode: AUTO
-        retry:
-          enabled: true
-          max-attempts: 3
-          initial-interval: 3000
-          max-interval: 10000
-          multiplier: 2
+        acknowledge-mode: MANUAL
 
