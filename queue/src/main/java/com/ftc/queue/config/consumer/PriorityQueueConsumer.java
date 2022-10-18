@@ -12,17 +12,17 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author: 冯铁城 [17615007230@163.com]
  * @date: 2022-10-18 10:09:27
- * @describe: 延迟队列相关消费者
+ * @describe: 优先级队列相关消费者
  */
 @Component
-public class DelayQueueConsumer {
+public class PriorityQueueConsumer {
 
     @SneakyThrows
-    @RabbitListener(queues = {"delay-queue"})
-    private void delayConsumer(Message message, Channel channel) {
+    @RabbitListener(queues = {"priority-queue"})
+    private void priorityConsumer(Message message, Channel channel) {
 
         //1.打印消息
-        StaticLog.info("DelayConsumer receive message:[{}]", new String(message.getBody(), StandardCharsets.UTF_8));
+        StaticLog.info("PriorityConsumer receive message:[{}]", new String(message.getBody(), StandardCharsets.UTF_8));
 
         //2.手动确认消费成功
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
