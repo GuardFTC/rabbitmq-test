@@ -17,6 +17,7 @@ spring:
     listener:
       simple:
         acknowledge-mode: AUTO
+        prefetch: 1
         retry:
           enabled: true
           max-attempts: 3

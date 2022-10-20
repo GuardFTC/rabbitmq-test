@@ -1,11 +1,12 @@
 package com.ftc.ordermessage.consumer;
 
-import cn.hutool.log.StaticLog;
-import lombok.SneakyThrows;
+import com.ftc.ordermessage.service.MessageService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author: 冯铁城 [17615007230@163.com]
@@ -13,21 +14,26 @@ import java.util.concurrent.TimeUnit;
  * @describe: 消费者
  */
 @Component
+@RequiredArgsConstructor
 public class Consumer {
 
-    @RabbitListener(queues = {"order-queue"})
-    public void consumer1(String message) {
-        StaticLog.info("Consumer1 receive message:[{}]", message);
-    }
+    private final MessageService messageService;
 
     @RabbitListener(queues = {"order-queue"})
-    @SneakyThrows(InterruptedException.class)
-    public void consumer2(String message) {
+    public void consumer1(Message message) {
 
-        //1.模拟该消费者消费性能较低
-        TimeUnit.MILLISECONDS.sleep(500);
+        //1.获取消息内容
+        String messageBody = new String(message.getBody(), StandardCharsets.UTF_8);
 
-        //2.消费消息
-        StaticLog.info("Consumer2 receive message:[{}]", message);
+        //2.获取消息类型
+        String type = message.getMessageProperties().getHeader("type");
+
+        //3.取模法分发消息
+        int index = Math.abs(type.hashCode() % 2);
+        if (0 == index) {
+            messageService.consoleLetter(messageBody);
+        } else {
+            messageService.consoleNumber(messageBody);
+        }
     }
 }
