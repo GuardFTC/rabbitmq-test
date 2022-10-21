@@ -16,4 +16,4 @@ spring:
     publisher-returns: true
     listener:
       simple:
-        acknowledge-mode: NONE
+        acknowledge-mode: MANUAL

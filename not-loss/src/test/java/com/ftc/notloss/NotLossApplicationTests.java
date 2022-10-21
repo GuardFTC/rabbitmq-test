@@ -30,6 +30,7 @@ class NotLossApplicationTests {
         //2.获取MessageCorrelationData、correlationData
         Message message = new Message(messageContent.getBytes(StandardCharsets.UTF_8));
         CorrelationData correlationData = RabbitMqUtil.getCorrelationData(exchange, routingKey, message);
+        message = RabbitMqUtil.setMessageIdToHeader(message, correlationData.getId());
 
         //3.发送消息
         rabbitTemplate.convertAndSend(errorExchange, routingKey, message, correlationData);
@@ -56,17 +57,36 @@ class NotLossApplicationTests {
     @Test
     void testBrokerLoss() {
 
-        //1.创建消息
+        //1.定义基本信息
+        String exchange = "not-loss-exchange";
+        String routingKey = "not-loss-queue";
+        String messageContent = "Broker丢失消息";
+
+        //2.创建消息
         MessageProperties messageProperties = new MessageProperties();
-        messageProperties.setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT);
-        Message message = new Message("Broker丢失消息".getBytes(StandardCharsets.UTF_8), messageProperties);
+        messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+        Message message = new Message(messageContent.getBytes(StandardCharsets.UTF_8), messageProperties);
+        CorrelationData correlationData = RabbitMqUtil.getCorrelationData(exchange, routingKey, message);
+        message = RabbitMqUtil.setMessageIdToHeader(message, correlationData.getId());
 
         //2.发送消息
-        rabbitTemplate.convertAndSend("not-loss-exchange", "not-loss-queue", message);
+        rabbitTemplate.convertAndSend(exchange, routingKey, message, correlationData);
     }
 
     @Test
     void testConsumerLoss() {
-        rabbitTemplate.convertAndSend("not-loss-exchange", "not-loss-queue", "Consumer丢失消息");
+
+        //1.定义基本信息
+        String exchange = "not-loss-exchange";
+        String routingKey = "not-loss-queue";
+        String messageContent = "";
+
+        //2.创建消息
+        Message message = new Message(messageContent.getBytes(StandardCharsets.UTF_8));
+        CorrelationData correlationData = RabbitMqUtil.getCorrelationData(exchange, routingKey, message);
+        message = RabbitMqUtil.setMessageIdToHeader(message, correlationData.getId());
+
+        //3.发送消息
+        rabbitTemplate.convertAndSend(exchange, routingKey, message, correlationData);
     }
 }
