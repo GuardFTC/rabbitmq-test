@@ -1,0 +1,26 @@
+#server配置
+server:
+  port: 8010
+
+#spring配置
+spring:
+
+  #rabbitMq配置
+  rabbitmq:
+    host: 120.48.107.224
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: 'java-test'
+    publisher-confirm-type: CORRELATED
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: AUTO
+        prefetch: 100
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 3000
+          max-interval: 10000
+          multiplier: 2
